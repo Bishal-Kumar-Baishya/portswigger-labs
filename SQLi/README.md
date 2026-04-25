@@ -33,6 +33,8 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 
 4. Enter the lab URL (with a category e.g. /filter?category=Gifts), TrackingId, and session ID when prompted
 
+## Updates
+- v2: Implemented binary search for length and character extraction, added requests.Session() for connection reuse. Reduced requests from ~740 to ~146, runtime from ~20 mins to < 5mins.
 
 ## Disclaimer
 This script is for educational use only on legal, intentionally vulnerable 
