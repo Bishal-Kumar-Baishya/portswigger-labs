@@ -2,7 +2,7 @@ import requests
 import string
 
 url = input("Enter the url(with any category): ")
-tracking_id = input("Enter th tracking ID: ")
+tracking_id = input("Enter the tracking ID: ")
 session_id = input("Enter the session ID: ")
 
 s = requests.Session()
