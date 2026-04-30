@@ -11,11 +11,11 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 | 4 | SQL injection UNION attack, finding a column containing text | SQLi | ✅ Solved |
 | 5 | SQL injection UNION attack, retrieving data from other tables | SQLi | ✅ Solved |
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
+| 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
 
 ## Built with
 - Python 3
 - requests module
-- string module
 
 ## How to run
 
@@ -24,11 +24,12 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
     pip install requests
 ```
 
-2. Open the lab in your browser, go to DevTools -> Applications -> Cookies and copy the TrackingId and session cookie values
+2. Open the lab in your browser, go to DevTools -> Application -> Cookies and copy the TrackingId and session cookie values
 
 3. Run the script:
 ``` 
     python SQLi/blind_sqli.py
+    python SQLi/blind_sqli_error_based.py
 ```
 
 4. Enter the lab URL (with a category e.g. /filter?category=Gifts), TrackingId, and session ID when prompted
