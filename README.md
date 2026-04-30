@@ -9,6 +9,7 @@ All work is performed on intentionally vulnerable lab environments provided by P
 PortSwigger Labs/
 ├── SQLi/
 │   ├── blind_sqli.py
+│   ├── blind_sqli_error_based.py
 │   └── README.md
 └── README.md
 ```
@@ -31,6 +32,7 @@ PortSwigger Labs/
 | Script | Description |
 |---|---|
 | `SQLi/blind_sqli.py` | Automates boolean-based blind SQLi — finds password length and extracts credentials character by character |
+| `SQLi/blind_sqli_error_based.py` | Automates error-based blind SQLi — finds password length and extracts credentials character by character |
 
 
 ## Disclaimer
