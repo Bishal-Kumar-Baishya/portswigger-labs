@@ -5,11 +5,13 @@ All work is performed on intentionally vulnerable lab environments provided by P
 
 ## Structure
 
+``` 
 PortSwigger Labs/
 ├── SQLi/
 │   ├── blind_sqli.py
 │   └── README.md
 └── README.md
+```
 
 ## Labs completed
 
@@ -21,6 +23,7 @@ PortSwigger Labs/
 | 4 | SQL injection UNION attack, finding a column containing text | SQLi | ✅ Solved |
 | 5 | SQL injection UNION attack, retrieving data from other tables | SQLi | ✅ Solved |
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
+| 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
 
 
 ## Custom Scripts
