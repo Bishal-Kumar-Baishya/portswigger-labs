@@ -12,6 +12,8 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 | 5 | SQL injection UNION attack, retrieving data from other tables | SQLi | ✅ Solved |
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
 | 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
+| 8 | Visible error-based SQL injection | SQLi | ✅ Solved |
+
 
 ## Built with
 - Python 3
@@ -33,6 +35,18 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 ```
 
 4. Enter the lab URL (with a category e.g. /filter?category=Gifts), TrackingId, and session ID when prompted
+
+## Key Techniques
+
+**Lab 8 — Visible error-based SQL injection**
+
+Manual testing with Burp due to character limits and variable error formats.
+
+**Payload:**
+' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)--
+
+**Key insight:** Delete the original TrackingId value to free up character space for longer payloads. Error message leaks the password directly.
+
 
 ## Updates
 - v2: Implemented binary search for length and character extraction, added requests.Session() for connection reuse. Reduced requests from ~740 to ~146, runtime from ~20 mins to < 5mins.

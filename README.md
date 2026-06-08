@@ -25,6 +25,7 @@ PortSwigger Labs/
 | 5 | SQL injection UNION attack, retrieving data from other tables | SQLi | ✅ Solved |
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
 | 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
+| 8 | Visible error-based SQL injection | SQLi | ✅ Solved |
 
 
 ## Custom Scripts
