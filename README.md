@@ -10,6 +10,7 @@ PortSwigger Labs/
 ├── SQLi/
 │   ├── blind_sqli.py
 │   ├── blind_sqli_error_based.py
+│   ├── blind_sqli_time_delays.py
 │   └── README.md
 └── README.md
 ```
@@ -26,6 +27,8 @@ PortSwigger Labs/
 | 6 | Blind SQL injection with conditional responses | SQLi | ✅ Solved |
 | 7 | Blind SQL injection with conditional errors | SQLi | ✅ Solved |
 | 8 | Visible error-based SQL injection | SQLi | ✅ Solved |
+| 9 | Blind SQL injection with time delays | SQLi | ✅ Solved |
+| 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
 
 
 ## Custom Scripts
@@ -34,6 +37,7 @@ PortSwigger Labs/
 |---|---|
 | `SQLi/blind_sqli.py` | Automates boolean-based blind SQLi — finds password length and extracts credentials character by character |
 | `SQLi/blind_sqli_error_based.py` | Automates error-based blind SQLi — finds password length and extracts credentials character by character |
+| `SQLi/blind_sqli_time_delays.py` | Automates time-based blind SQLi using pg_sleep() and binary search |
 
 
 ## Disclaimer
