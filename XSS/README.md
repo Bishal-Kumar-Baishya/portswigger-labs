@@ -6,6 +6,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | # | Lab Name | Category | Status |
 |---|---|---|---|
 | 1 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
+| 2 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -28,6 +29,14 @@ fetch('/my-account')
     });
   });
 </script>
+```
+
+**Lab 2 - Reflected XSS into HTML context with nothing encoded**
+Reflected XSS in search functionality. User input reflected directly into 
+page HTML with zero escaping or filtering — payload executes immediately.
+**Payload:**
+```html
+<script>alert('xss')</script>
 ```
 
 ## Disclaimer

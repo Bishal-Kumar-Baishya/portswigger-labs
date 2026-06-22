@@ -32,6 +32,7 @@ PortSwigger Labs/
 | 9 | Blind SQL injection with time delays | SQLi | ✅ Solved |
 | 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
 | 11 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
+| 12 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 
 
 ## Custom Scripts
