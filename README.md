@@ -12,6 +12,8 @@ PortSwigger Labs/
 │   ├── blind_sqli_error_based.py
 │   ├── blind_sqli_time_delays.py
 │   └── README.md
+├── XSS/
+│   └── README.md
 └── README.md
 ```
 
@@ -29,6 +31,7 @@ PortSwigger Labs/
 | 8 | Visible error-based SQL injection | SQLi | ✅ Solved |
 | 9 | Blind SQL injection with time delays | SQLi | ✅ Solved |
 | 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
+| 11 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
 
 
 ## Custom Scripts
