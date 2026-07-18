@@ -34,6 +34,7 @@ PortSwigger Labs/
 | 11 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
 | 12 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 13 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
+| 14 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
 
 
 ## Custom Scripts

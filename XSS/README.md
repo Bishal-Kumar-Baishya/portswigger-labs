@@ -8,6 +8,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 1 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
 | 2 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 3 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
+| 4 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -46,6 +47,15 @@ Stored XSS in comment functionality. The comment reflected directly to someone w
 ```html
 <script>alert('xss')</script>
 ```
+
+**Lab 4 - DOM XSS in document.write sink using source location.search**
+DOM based XSS vulnerability lives in client side javascript, not in server. This lab had document.write() directly 
+outputting location.search (the URL query parameter) without sanitization.
+```html
+"><script>alert('XSS')</script>
+```
+The "> closed the wrapping HTML tag, allowing the script to execute as code 
+rather than being treated as data.
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
