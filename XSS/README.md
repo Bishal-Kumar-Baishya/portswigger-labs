@@ -9,6 +9,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 2 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 3 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 4 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
+| 5 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -56,6 +57,17 @@ outputting location.search (the URL query parameter) without sanitization.
 ```
 The "> closed the wrapping HTML tag, allowing the script to execute as code 
 rather than being treated as data.
+
+**Lab 5 - DOM XSS in innerHTML sink using source location.search**
+DOM-based XSS vulnerability where JavaScript code uses innerHTML to write 
+location.search (URL query parameter) directly into the page without sanitization.
+Key difference from document.write: innerHTML doesn't execute <script> tags 
+when inserted, so event handlers like onerror are more reliable.
+```html
+Payload: <img src=x onerror=alert('XSS')>
+```
+The broken image triggers the onerror event, executing the JavaScript payload.
+
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
