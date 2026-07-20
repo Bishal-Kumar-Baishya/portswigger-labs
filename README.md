@@ -36,6 +36,7 @@ PortSwigger Labs/
 | 13 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 14 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
 | 15 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
+| 16 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
 
 
 ## Custom Scripts
