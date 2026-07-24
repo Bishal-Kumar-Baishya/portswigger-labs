@@ -79,7 +79,6 @@ Payload: javascript:alert(document.cookie)
 The javascript: scheme tells the browser to execute JavaScript when the link 
 is clicked, rather than navigating to a URL. This exfiltrates the victim's cookies.
 
-
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
 environments such as PortSwigger Web Security Academy labs.
