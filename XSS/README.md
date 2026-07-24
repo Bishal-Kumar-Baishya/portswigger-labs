@@ -12,6 +12,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 5 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
 | 6 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
 | 7 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
+| 8 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -78,6 +79,14 @@ Payload: javascript:alert(document.cookie)
 ```
 The javascript: scheme tells the browser to execute JavaScript when the link 
 is clicked, rather than navigating to a URL. This exfiltrates the victim's cookies.
+
+**Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded**
+Reflected XSS in search functionality. User input reflected directly into 
+page HTML with zero escaping or filtering — payload executes immediately.
+This time the angle brackets get HTML encoded, so script tags will not work here.
+```html
+Payload: " autofocus onfocus="alert(1)
+```
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
