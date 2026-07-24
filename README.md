@@ -39,6 +39,7 @@ PortSwigger Labs/
 | 16 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
 | 17 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
 | 18 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
+| 19 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
 
 
 ## Custom Scripts
