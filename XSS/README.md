@@ -11,6 +11,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 4 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
 | 5 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
 | 6 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
+| 7 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
 
 ## Key Techniques
 

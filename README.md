@@ -37,6 +37,7 @@ PortSwigger Labs/
 | 14 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
 | 15 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
 | 16 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
+| 17 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
 
 
 ## Custom Scripts
