@@ -17,6 +17,7 @@ SQL injection (SQLi) is a technique where attackers insert malicious SQL command
 | 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
 | 11 | SQL injection attack, querying the database type and version on Oracle | SQLi | ✅ Solved |
 | 12 | SQL injection attack, querying the database type and version on MySQL and Microsoft | SQLi | ✅ Solved |
+| 13 | SQL injection attack, listing the database contents on non-Oracle databases | SQLi | ✅ Solved |
 
 
 ## Built with

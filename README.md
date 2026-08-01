@@ -33,16 +33,17 @@ PortSwigger Labs/
 | 10 | Blind SQL injection with time delays and information retrieval | SQLi | ✅ Solved |
 | 11 | SQL injection attack, querying the database type and version on Oracle | SQLi | ✅ Solved |
 | 12 | SQL injection attack, querying the database type and version on MySQL and Microsoft | SQLi | ✅ Solved |
+| 13 | SQL injection attack, listing the database contents on non-Oracle databases | SQLi | ✅ Solved |
 
-| 13 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
-| 14 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
-| 15 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
-| 16 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
-| 17 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
-| 18 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
-| 19 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
-| 20 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
-| 21 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
+| 14 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
+| 15 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
+| 16 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
+| 17 | DOM XSS in document.write sink using source location.search | XSS | ✅ Solved |
+| 18 | DOM XSS in innerHTML sink using source location.search | XSS | ✅ Solved |
+| 19 | DOM XSS in jQuery anchor href attribute sink using location.search source | XSS | ✅ Solved |
+| 20 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
+| 21 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
+| 22 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
 
 
 ## Custom Scripts
