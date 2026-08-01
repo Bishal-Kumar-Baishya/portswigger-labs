@@ -14,6 +14,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 7 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
 | 8 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
 | 9 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
+| 10 | Reflected XSS into a JavaScript string with angle brackets HTML encoded | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -96,6 +97,11 @@ HTML-encoded, attribute-breakout with `"` doesn't work — but the `javascript:`
 URL scheme still executes when the link is clicked, no quote-breaking needed.
 ```html
 Payload: javascript:alert(1)
+```
+
+**Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded**
+```html
+Payload: '; alert(1);//
 ```
 
 ## Disclaimer

@@ -44,6 +44,7 @@ PortSwigger Labs/
 | 21 | DOM XSS in jQuery selector sink using a hashchange event | XSS | ✅ Solved |
 | 22 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
 | 23 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
+| 24 | Reflected XSS into a JavaScript string with angle brackets HTML encoded | XSS | ✅ Solved |
 
 
 ## Custom Scripts
