@@ -35,7 +35,6 @@ PortSwigger Labs/
 | 12 | SQL injection attack, querying the database type and version on MySQL and Microsoft | SQLi | ✅ Solved |
 | 13 | SQL injection attack, listing the database contents on non-Oracle databases | SQLi | ✅ Solved |
 | 14 | SQL injection attack, listing the database contents on Oracle | SQLi | ✅ Solved |
-
 | 15 | Exploiting XSS to bypass CSRF defenses | XSS | ✅ Solved |
 | 16 | Reflected XSS into HTML context with nothing encoded | XSS | ✅ Solved |
 | 17 | Stored XSS into HTML context with nothing encoded | XSS | ✅ Solved |
