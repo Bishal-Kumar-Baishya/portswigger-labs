@@ -45,6 +45,7 @@ PortSwigger Labs/
 | 22 | Reflected XSS into attribute with angle brackets HTML-encoded | XSS | ✅ Solved |
 | 23 | Stored XSS into anchor href attribute with double quotes HTML-encoded | XSS | ✅ Solved |
 | 24 | Reflected XSS into a JavaScript string with angle brackets HTML encoded | XSS | ✅ Solved |
+| 25 | DOM XSS in document.write sink using source location.search inside a select element | XSS | ✅ Solved |
 
 
 ## Custom Scripts
