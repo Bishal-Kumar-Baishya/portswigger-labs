@@ -47,7 +47,7 @@ PortSwigger Labs/
 | 24 | Reflected XSS into a JavaScript string with angle brackets HTML encoded | XSS | ✅ Solved |
 | 25 | DOM XSS in document.write sink using source location.search inside a select element | XSS | ✅ Solved |
 | 26 | DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded | XSS | ✅ Solved |
-
+| 27 | Reflected DOM XSS | XSS | ✅ Solved |
 
 ## Custom Scripts
 

