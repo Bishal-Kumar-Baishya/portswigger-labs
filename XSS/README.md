@@ -118,10 +118,17 @@ Payload: {{$on.constructor('alert(1)')()}}
 ```
 
 **Lab 13 - Reflected DOM XSS**
-Server echoes user input in JSON response. Client-side JavaScript uses eval() 
-on the response, making it a dangerous sink. Server escapes quotes with backslashes, 
-but the payload `\"-alert(1)}//` exploits this escaping — the `\"` closes the 
-string early, letting injected code execute outside the JSON object.
+**Methodology**
+I got search bar, so I'm pretty sure that it's the way to interact with the website and inject the payload.
+After checking the source code, I found a js file which processes the data. When I visited the file, I saw the first function with variable xhr which is making an http request, and a function with promise, so the promise expects the server response and stores it in variable searchResultsObj.
+I typed "test" in search bar to check the server response.
+Response: {"results":[],"searchTerm":"test"}
+So the search we did was directly put in searchTerm without any sanitization. BINGO, found the vulnerability/flaw, because everything has a flaw. We just have to find it by observing, how I know? I just observed.
+So now to exploit it and prepare for an attack with payload.
+I searched with something abnormal to escape the searchTerm by closing it, but response added a back slash, that's the problem, we have to escape it too.
+How? By back slash.
+I noticed another thing when I used the first payload: ";alert(1);//
+The first semicolon, because of it the payload didn't work. I checked the url with something encoded %3B, so I changed it by adding '-' and closing the curly braces.
 ```html
 Payload: \"-alert(1)}//
 ```
