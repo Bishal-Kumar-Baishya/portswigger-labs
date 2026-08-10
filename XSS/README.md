@@ -18,6 +18,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 11 | DOM XSS in document.write sink using source location.search inside a select element | XSS | ✅ Solved |
 | 12 | DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded | XSS | ✅ Solved |
 | 13 | Reflected DOM XSS | XSS | ✅ Solved |
+| 14 | Stored DOM XSS | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -76,7 +77,7 @@ Payload: <img src=x onerror=alert('XSS')>
 ```
 The broken image triggers the onerror event, executing the JavaScript payload.
 
-**Lab 5 - DOM XSS in jQuery anchor href attribute sink using location.search source**
+**Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source**
 DOM-based XSS using jQuery. The code took the returnPath URL parameter 
 and directly inserted it into a link's href attribute without sanitization.
 ```html
@@ -131,6 +132,22 @@ I noticed another thing when I used the first payload: ";alert(1);//
 The first semicolon, because of it the payload didn't work. I checked the url with something encoded %3B, so I changed it by adding '-' and closing the curly braces.
 ```html
 Payload: \"-alert(1)}//
+```
+
+**Lab 14 - Stored DOM XSS**
+**Methodology and Hypothesis testing**
+Hypothesis 1: website field with `javascript:alert(1)`
+- result:- Failed because of client side validation
+Hypothesis 2: Bypass validation via Console with command `document.querySelector('input["website"]').value="javascript:alert(1)";`
+- result:- Failed, can't be bypassed by console on client side, means server is validating too
+Hypothesis 3: URL encoding trick with `https://javascript:alert(1)`
+- result:- Failed, treated as plain text URL, didn't execute
+Direction change - Investigate other input fields for vulnerability, found a function converting angle brackets to &lt and &gt. Trying comment body.
+Hypothesis 4: Comment body with `<img src=x onerror=alert(1)>`, as expected it becomes `<p>&lt;img src=x onerror=alert(1)&gt;</p>`
+Hypothesis 5: Does it convert every angle brackets to &gt and &lt, looking at the function which replaces it, BINGO, found the vulnerability. `html.replace('<', '&lt;').replace('>', '&gt;');`
+The replace method didn't use any global flag. So it converts only first occurrence of opening and closing angle brackets.
+```javascript
+Final payload: <><img src=x onerror=alert(1)>
 ```
 
 ## Disclaimer
