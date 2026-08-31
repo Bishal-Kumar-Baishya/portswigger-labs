@@ -49,6 +49,7 @@ PortSwigger Labs/
 | 26 | DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded | XSS | ✅ Solved |
 | 27 | Reflected DOM XSS | XSS | ✅ Solved |
 | 28 | Stored DOM XSS | XSS | ✅ Solved |
+| 29 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
 
 ## Custom Scripts
 
