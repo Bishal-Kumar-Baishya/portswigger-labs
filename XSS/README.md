@@ -19,6 +19,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 12 | DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded | XSS | ✅ Solved |
 | 13 | Reflected DOM XSS | XSS | ✅ Solved |
 | 14 | Stored DOM XSS | XSS | ✅ Solved |
+| 15 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -119,6 +120,7 @@ Payload: {{$on.constructor('alert(1)')()}}
 ```
 
 **Lab 13 - Reflected DOM XSS**
+
 **Methodology**
 I got search bar, so I'm pretty sure that it's the way to interact with the website and inject the payload.
 After checking the source code, I found a js file which processes the data. When I visited the file, I saw the first function with variable xhr which is making an http request, and a function with promise, so the promise expects the server response and stores it in variable searchResultsObj.
@@ -135,6 +137,7 @@ Payload: \"-alert(1)}//
 ```
 
 **Lab 14 - Stored DOM XSS**
+
 **Methodology and Hypothesis testing**
 - Hypothesis 1: website field with `javascript:alert(1)`
 result:- Failed because of client side validation
@@ -150,6 +153,36 @@ The replace method didn't use any global flag. So it converts only first occurre
 ```javascript
 Final payload: <><img src=x onerror=alert(1)>
 ```
+
+**Lab 15 - Reflected XSS into HTML context with most tags and attributes blocked**
+
+**Methodology**
+So in this lab it is mentioned that vulnerability lies in search functionality but it is protected by WAF (Web Application Firewall) for common XSS vectors.
+
+**Testing standard XSS payloads:**
+```
+<script>alert</script>
+<img src=x onerror=alert()>
+```
+Both of these will get blocked by the firewall because it relies on signature-based filtering of high-profile tags like `<script>` and `<img>` while omitting structural layout tags like `<body>` and non-standard event handlers like `onresize`. 
+
+Now we know that a firewall will block these with respect to a blocklist which contains all these tags or event listeners. But it is not protected against every tag or event listener, some of them will definitely pass through it. For that case we will use BurpSuite.
+
+**Enumeration & Filtering Bypass**
+
+Open BurpSuite and turn on the intercept button, make a simple search request in the lab like `hello`, once you hit click, BurpSuite will show the request containing the search query we are making. Select the search query and move it to the **Intruder** in burpSuite using `CTRL + I`. 
+
+Now in PortSwigger XSS section, click this link - [cheatsheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet), so we can test which of the tags and event listeners will work on it. Click **Copy tags to clipboard** to test for tags.
+
+In **Intruder**, in left side which is showing the request, we will change `GET /?search=$hello$ HTTP/2` to `GET /?search=<$$> HTTP/2`, and paste the tags in payload configuration. **Intruder** will brute force every tags inside `$$`. Also check off the **URL-encode these characters** in BurpSuite. We found that **body** tag is the one giving **200 OK** status. Similarly we will do this for event listeners by copying from cheatsheet, and we found out that **resize** also giving **200 OK** status.
+
+If we craft a payload like `<body onresize=print()>`, it will not work because something needs to trigger resize too. We will use **iframe** tag for that. In **Go to exploit server** of lab, we make the final payload like:-
+```
+Payload: <iframe src="https://<LAB_ID>.web-security-academy.net/?search=<body onresize=print()>" onload="this.style.width='500px'"></iframe>
+```
+Now a question arises from this: **Why does the iframe tag not get blocked?**
+
+The `<iframe>` resides on the attacker's origin to bypass target-side WAF restrictions on frame creation, using onload to programmatically trigger the target's internal onresize listener via CSS modification.
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
