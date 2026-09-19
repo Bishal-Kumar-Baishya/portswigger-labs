@@ -20,6 +20,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 13 | Reflected DOM XSS | XSS | ✅ Solved |
 | 14 | Stored DOM XSS | XSS | ✅ Solved |
 | 15 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
+| 16 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -183,6 +184,22 @@ Payload: <iframe src="https://<LAB_ID>.web-security-academy.net/?search=<body on
 Now a question arises from this: **Why does the iframe tag not get blocked?**
 
 The `<iframe>` resides on the attacker's origin to bypass target-side WAF restrictions on frame creation, using onload to programmatically trigger the target's internal onresize listener via CSS modification.
+
+**lab 16 - Reflected XSS into HTML context with all tags blocked except custom ones**
+Custom tags bypass WAF blocklists because they're non-standard HTML. However, custom tags can still receive standard HTML attributes like autofocus, tabindex, and onfocus. 
+
+The attack chain works by: 
+- (1) Creating a custom tag like `<xss>`
+- (2) Making it focusable with tabindex
+- (3) Auto-focusing it on page load with autofocus
+- (4) Executing code when focus is received via onfocus. The payload must be URL-encoded when delivered through the search parameter to prevent URL parsing errors.
+```
+Payload: <script>location = 'https://<LAB_ID>.web-security-academy.net/?search=%3Cxss+autofocus+tabindex%3D%220%22+onfocus%3D%22alert%28document.cookie%29%22%3E%3C%2Fxss%3E'</script>
+```
+Decoded payload in search parameter:
+```html
+<xss autofocus tabindex="0" onfocus="alert(document.cookie)"></xss>
+```
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
