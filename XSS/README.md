@@ -73,7 +73,7 @@ rather than being treated as data.
 **Lab 5 - DOM XSS in innerHTML sink using source location.search**
 DOM-based XSS vulnerability where JavaScript code uses innerHTML to write 
 location.search (URL query parameter) directly into the page without sanitization.
-Key difference from document.write: innerHTML doesn't execute <script> tags 
+Key difference from document.write: innerHTML doesn't execute `<script>` tags 
 when inserted, so event handlers like onerror are more reliable.
 ```html
 Payload: <img src=x onerror=alert('XSS')>
@@ -117,9 +117,18 @@ Payload: https://...productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=x%20oner
 ```
 
 **Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**
-```html
-Payload: {{$on.constructor('alert(1)')()}}
+AngularJS processes JavaScript expressions inside `{{ }}` double curly braces. When angle brackets `<>` and quotes are HTML-encoded, standard XSS payloads fail. However, AngularJS expressions bypass this by using the Function constructor.
+**How it works:**
+- ng-app on the page activates AngularJS`
+- `{{ }}` tells AngularJS to execute code inside
+- `constructor.constructor` = Function (the code executor)
+- Function('code')() takes a string and executes it
+- No quotes or angle brackets needed
 ```
+Payload: {{ constructor.constructor('alert(1)')() }}
+```
+**Why it works:**
+Instead of `alert(1)` (which needs quotes and might be blocked), we use `Function('alert(1)')` which executes the string as code. The `()` at the end runs it immediately.
 
 **Lab 13 - Reflected DOM XSS**
 
