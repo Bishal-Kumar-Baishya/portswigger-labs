@@ -25,7 +25,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 
 ## Key Techniques
 
-**Lab 1 — Exploiting XSS to bypass CSRF defenses**
+**Lab 1 — Exploiting XSS to bypass CSRF defenses**<br>
 Stored XSS in blog comments. Payload fetches victim's account page, 
 extracts CSRF token using regex, then uses that token to submit a POST 
 request changing the victim's email address — all executed silently 
@@ -46,7 +46,7 @@ fetch('/my-account')
 </script>
 ```
 
-**Lab 2 - Reflected XSS into HTML context with nothing encoded**
+**Lab 2 - Reflected XSS into HTML context with nothing encoded**<br>
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
 **Payload:**
@@ -54,14 +54,14 @@ page HTML with zero escaping or filtering — payload executes immediately.
 <script>alert('xss')</script>
 ```
 
-**Lab 3 - Stored XSS into HTML context with nothing encoded**
+**Lab 3 - Stored XSS into HTML context with nothing encoded**<br>
 Stored XSS in comment functionality. The comment reflected directly to someone who views it
 **Payload:**
 ```html
 <script>alert('xss')</script>
 ```
 
-**Lab 4 - DOM XSS in document.write sink using source location.search**
+**Lab 4 - DOM XSS in document.write sink using source location.search**<br>
 DOM based XSS vulnerability lives in client side javascript, not in server. This lab had document.write() directly 
 outputting location.search (the URL query parameter) without sanitization.
 ```html
@@ -70,7 +70,7 @@ outputting location.search (the URL query parameter) without sanitization.
 The "> closed the wrapping HTML tag, allowing the script to execute as code 
 rather than being treated as data.
 
-**Lab 5 - DOM XSS in innerHTML sink using source location.search**
+**Lab 5 - DOM XSS in innerHTML sink using source location.search**<br>
 DOM-based XSS vulnerability where JavaScript code uses innerHTML to write 
 location.search (URL query parameter) directly into the page without sanitization.
 Key difference from document.write: innerHTML doesn't execute `<script>` tags 
@@ -80,7 +80,7 @@ Payload: <img src=x onerror=alert('XSS')>
 ```
 The broken image triggers the onerror event, executing the JavaScript payload.
 
-**Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source**
+**Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source**<br>
 DOM-based XSS using jQuery. The code took the returnPath URL parameter 
 and directly inserted it into a link's href attribute without sanitization.
 ```html
@@ -89,7 +89,33 @@ Payload: javascript:alert(document.cookie)
 The javascript: scheme tells the browser to execute JavaScript when the link 
 is clicked, rather than navigating to a URL. This exfiltrates the victim's cookies.
 
-**Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded**
+**Lab 7 - DOM XSS in jQuery selector sink using a hashchange event**<br>
+The page listens for hash changes (#something). When the hash changes, it uses jQuery to find and scroll to a matching post title. However, the hash is taken directly from the URL and put into a jQuery selector without checking if it's safe.
+```javascript
+$(window).on('hashchange', function(){
+    var post = $('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+    if (post) post.get(0).scrollIntoView();
+});
+```
+**How it works:**
+- `window.location.hash.slice(1)` gets everything after `#` in the URL
+- This is put directly into a jQuery selector
+- jQuery processes it and can execute HTML/JavaScript
+
+```
+Payload: <iframe src="https://target.com/#" onload="this.src+='<img src=x onerror=print()>'"></iframe>
+```
+**Why it works:**
+- iframe loads with empty hash
+- onload fires and adds `<img src=x onerror=print()>` to the URL
+- Hash changes to `#<img src=x onerror=print()>`
+- hashchange event triggers
+- jQuery puts the malicious HTML into the selector
+- Browser executes the `<img>` tag
+- onerror event fires (because image fails to load)
+- print() executes
+
+**Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded**<br>
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
 This time the angle brackets get HTML encoded, so script tags will not work here.
@@ -97,7 +123,7 @@ This time the angle brackets get HTML encoded, so script tags will not work here
 Payload: " autofocus onfocus="alert(1)
 ```
 
-**Lab 9 - Stored XSS into anchor href attribute with double quotes HTML-encoded**
+**Lab 9 - Stored XSS into anchor href attribute with double quotes HTML-encoded**<br>
 Stored XSS via the comment form's Website field. The value becomes the 
 `href` attribute of the comment author's name link. Since double quotes are 
 HTML-encoded, attribute-breakout with `"` doesn't work — but the `javascript:` 
@@ -106,17 +132,17 @@ URL scheme still executes when the link is clicked, no quote-breaking needed.
 Payload: javascript:alert(1)
 ```
 
-**Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded**
+**Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded**<br>
 ```html
 Payload: '; alert(1);//
 ```
 
-**Lab 11 - DOM XSS in document.write sink using source location.search inside a select element**
+**Lab 11 - DOM XSS in document.write sink using source location.search inside a select element**<br>
 ```html
 Payload: https://...productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=x%20onerror=alert(1)%3E
 ```
 
-**Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**
+**Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**<br>
 AngularJS processes JavaScript expressions inside `{{ }}` double curly braces. When angle brackets `<>` and quotes are HTML-encoded, standard XSS payloads fail. However, AngularJS expressions bypass this by using the Function constructor.
 **How it works:**
 - ng-app on the page activates AngularJS`
