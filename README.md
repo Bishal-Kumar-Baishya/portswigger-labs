@@ -53,6 +53,7 @@ PortSwigger Labs/
 | 30 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
 | 31 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
 | 32 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
+| 33 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 
 ## Custom Scripts
 
