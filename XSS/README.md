@@ -23,6 +23,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 16 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
 | 17 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
 | 18 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
+| 19 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -47,6 +48,8 @@ fetch('/my-account')
 </script>
 ```
 
+---
+
 **Lab 2 - Reflected XSS into HTML context with nothing encoded**<br>
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
@@ -54,6 +57,7 @@ page HTML with zero escaping or filtering — payload executes immediately.
 ```html
 <script>alert('xss')</script>
 ```
+---
 
 **Lab 3 - Stored XSS into HTML context with nothing encoded**<br>
 Stored XSS in comment functionality. The comment reflected directly to someone who views it
@@ -61,6 +65,7 @@ Stored XSS in comment functionality. The comment reflected directly to someone w
 ```html
 <script>alert('xss')</script>
 ```
+---
 
 **Lab 4 - DOM XSS in document.write sink using source location.search**<br>
 DOM based XSS vulnerability lives in client side javascript, not in server. This lab had document.write() directly 
@@ -70,6 +75,8 @@ outputting location.search (the URL query parameter) without sanitization.
 ```
 The "> closed the wrapping HTML tag, allowing the script to execute as code 
 rather than being treated as data.
+
+---
 
 **Lab 5 - DOM XSS in innerHTML sink using source location.search**<br>
 DOM-based XSS vulnerability where JavaScript code uses innerHTML to write 
@@ -81,6 +88,8 @@ Payload: <img src=x onerror=alert('XSS')>
 ```
 The broken image triggers the onerror event, executing the JavaScript payload.
 
+---
+
 **Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source**<br>
 DOM-based XSS using jQuery. The code took the returnPath URL parameter 
 and directly inserted it into a link's href attribute without sanitization.
@@ -89,6 +98,8 @@ Payload: javascript:alert(document.cookie)
 ```
 The javascript: scheme tells the browser to execute JavaScript when the link 
 is clicked, rather than navigating to a URL. This exfiltrates the victim's cookies.
+
+---
 
 **Lab 7 - DOM XSS in jQuery selector sink using a hashchange event**<br>
 The page listens for hash changes (#something). When the hash changes, it uses jQuery to find and scroll to a matching post title. However, the hash is taken directly from the URL and put into a jQuery selector without checking if it's safe.
@@ -116,6 +127,8 @@ Payload: <iframe src="https://target.com/#" onload="this.src+='<img src=x onerro
 - onerror event fires (because image fails to load)
 - print() executes
 
+---
+
 **Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded**<br>
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
@@ -123,6 +136,8 @@ This time the angle brackets get HTML encoded, so script tags will not work here
 ```html
 Payload: " autofocus onfocus="alert(1)
 ```
+
+---
 
 **Lab 9 - Stored XSS into anchor href attribute with double quotes HTML-encoded**<br>
 Stored XSS via the comment form's Website field. The value becomes the 
@@ -133,6 +148,8 @@ URL scheme still executes when the link is clicked, no quote-breaking needed.
 Payload: javascript:alert(1)
 ```
 
+---
+
 **Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded**<br>
 ```html
 Payload: '; alert(1);//
@@ -142,6 +159,8 @@ Payload: '; alert(1);//
 ```html
 Payload: https://...productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=x%20onerror=alert(1)%3E
 ```
+
+---
 
 **Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**<br>
 AngularJS processes JavaScript expressions inside `{{ }}` double curly braces. When angle brackets `<>` and quotes are HTML-encoded, standard XSS payloads fail. However, AngularJS expressions bypass this by using the Function constructor.
@@ -156,6 +175,8 @@ Payload: {{ constructor.constructor('alert(1)')() }}
 ```
 **Why it works:**
 Instead of `alert(1)` (which needs quotes and might be blocked), we use `Function('alert(1)')` which executes the string as code. The `()` at the end runs it immediately.
+
+---
 
 **Lab 13 - Reflected DOM XSS**
 
@@ -174,6 +195,8 @@ The first semicolon, because of it the payload didn't work. I checked the url wi
 Payload: \"-alert(1)}//
 ```
 
+---
+
 **Lab 14 - Stored DOM XSS**
 
 **Methodology and Hypothesis testing**
@@ -191,6 +214,8 @@ The replace method didn't use any global flag. So it converts only first occurre
 ```javascript
 Final payload: <><img src=x onerror=alert(1)>
 ```
+
+---
 
 **Lab 15 - Reflected XSS into HTML context with most tags and attributes blocked**
 
@@ -222,6 +247,8 @@ Now a question arises from this: **Why does the iframe tag not get blocked?**
 
 The `<iframe>` resides on the attacker's origin to bypass target-side WAF restrictions on frame creation, using onload to programmatically trigger the target's internal onresize listener via CSS modification.
 
+---
+
 **lab 16 - Reflected XSS into HTML context with all tags blocked except custom ones**
 Custom tags bypass WAF blocklists because they're non-standard HTML. However, custom tags can still receive standard HTML attributes like autofocus, tabindex, and onfocus. 
 
@@ -237,6 +264,8 @@ Decoded payload in search parameter:
 ```html
 <xss autofocus tabindex="0" onfocus="alert(document.cookie)"></xss>
 ```
+
+---
 
 **Lab 17 - Reflected XSS with some SVG markup allowed**
 SVG animation tags like `<animateTransform>` bypass standard WAF filters because they're specialized SVG elements. The onbegin event fires automatically when the animation element is created/parsed, without requiring user interaction or explicit animation triggers. By nesting `<animateTransform>` inside an SVG container (`<svg>` and `<rect>`), the event fires immediately on page load, executing arbitrary code.
@@ -264,7 +293,9 @@ Hypothesis 6: <svg><rect width="100" height="100"><animateTransform onbegin="ale
 Result: ✅ Alert executed
 ```
 
-**Lab 20 - Reflected XSS in canonical link tag**
+---
+
+**Lab 18 - Reflected XSS in canonical link tag**
 
 **Vulnerability:** The page reflects user input directly into the href attribute of a canonical link tag in the `<head>`. While angle brackets are escaped (preventing `<script>` injection), you can break out of the href attribute and inject new HTML attributes.
 
@@ -295,6 +326,34 @@ html
 - User presses Alt+X (the accesskey shortcut)
 - The onclick handler fires
 - alert(1) executes
+
+---
+
+**Lab 19 - Reflected XSS into a JavaScript string with single quote and backslash escaped**
+
+**Vulnerability:** User input is reflected directly into a JavaScript string variable. While single quotes and backslashes are escaped by the server, angle brackets are not. This allows injection of HTML/script tags that break out of the JavaScript context.
+
+**Vulnerable Code:**
+```javascript
+var searchTerms = 'USER_INPUT';
+document.write('<img src="/resources/images/tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');
+```
+**The Problem:** 
+Single quotes ' and backslashes \ are escaped (can't use them to break out). But angle brackets <> are NOT escaped. This allows injecting actual HTML tags
+
+**How it works:**
+- Input is placed inside a JavaScript string: var searchTerms = 'INPUT'
+- Angle brackets aren't filtered, so HTML tags pass through
+- Closing `</script>` tag breaks out of the original script block
+- New `<script>` tag executes arbitrary code
+```javascript
+Payload: </script><script>alert(1)</script>
+```
+
+**Key Learning:**
+- Server-side escaping of quotes/backslashes isn't enough if angle brackets aren't filtered
+- HTML tag injection can break out of JavaScript strings
+- Close existing tags, then inject your own
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
