@@ -22,6 +22,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 15 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
 | 16 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
 | 17 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
+| 18 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -262,6 +263,38 @@ Result: animate is not allowed
 Hypothesis 6: <svg><rect width="100" height="100"><animateTransform onbegin="alert('xss')"></animateTransform></rect> </svg>
 Result: ✅ Alert executed
 ```
+
+**Lab 20 - Reflected XSS in canonical link tag**
+
+**Vulnerability:** The page reflects user input directly into the href attribute of a canonical link tag in the `<head>`. While angle brackets are escaped (preventing `<script>` injection), you can break out of the href attribute and inject new HTML attributes.
+
+**Vulnerable Code Pattern:**
+```html
+<link rel="canonical" href="USER_INPUT_HERE">
+```
+**How it works:**
+- The input parameter goes directly into the href attribute value
+- You can close the href with a quote
+- Then inject new attributes like accesskey and onclick
+- accesskey creates a keyboard shortcut (e.g., Alt+X)
+- When the user presses the shortcut, onclick executes
+
+```
+Payload: ?'accesskey='x'onclick='alert(1)
+```
+**URL-Encoded:** `https://target.com/?%27accesskey=%27x%27onclick=%27alert(1)`
+
+**Result in HTML:**
+```
+html
+<link rel="canonical" href="https://target.com/?'accesskey='x'onclick='alert(1)">
+```
+**Execution:**
+- User visits the malicious URL
+- Payload is reflected into the canonical link tag
+- User presses Alt+X (the accesskey shortcut)
+- The onclick handler fires
+- alert(1) executes
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 

@@ -52,14 +52,15 @@ PortSwigger Labs/
 | 29 | Reflected XSS into HTML context with most tags and attributes blocked | XSS | ✅ Solved |
 | 30 | Reflected XSS into HTML context with all tags blocked except custom ones | XSS | ✅ Solved |
 | 31 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
+| 32 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 
 ## Custom Scripts
 
 | Script | Description |
 |---|---|
-| `SQLi/blind_sqli.py` | Automates boolean-based blind SQLi — finds password length and extracts credentials character by character |
-| `SQLi/blind_sqli_error_based.py` | Automates error-based blind SQLi — finds password length and extracts credentials character by character |
-| `SQLi/blind_sqli_time_delays.py` | Automates time-based blind SQLi using pg_sleep() and binary search |
+| [SQLi/blind_sqli.py](/SQLi/blind_sqli.py) | Automates boolean-based blind SQLi — finds password length and extracts credentials character by character |
+| [SQLi/blind_sqli_error_based.py](/SQLi/blind_sqli_error_based.py) | Automates error-based blind SQLi — finds password length and extracts credentials character by character |
+| [SQLi/blind_sqli_time_delays.py](/SQLi/blind_sqli_time_delays.py) | Automates time-based blind SQLi using pg_sleep() and binary search |
 
 
 ## Disclaimer
@@ -71,4 +72,4 @@ This repository is for educational purposes only. Never use these techniques on 
 
 ## Author
 
-[BishalKumarBaishya](https://github.com/Bishal-Kumar-Baishya) — B.Tech CSE | Cybersecurity
+[Github link](https://github.com/Bishal-Kumar-Baishya) — B.Tech CSE | Cybersecurity
