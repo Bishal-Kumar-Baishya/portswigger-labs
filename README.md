@@ -54,6 +54,7 @@ PortSwigger Labs/
 | 31 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
 | 32 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 | 33 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
+| 34 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
 
 ## Custom Scripts
 
