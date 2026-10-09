@@ -24,10 +24,11 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 17 | Reflected XSS with some SVG markup allowed | XSS | ✅ Solved |
 | 18 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 | 19 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
+| 20 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
 
 ## Key Techniques
 
-**Lab 1 — Exploiting XSS to bypass CSRF defenses**<br>
+### Lab 1 — Exploiting XSS to bypass CSRF defenses
 Stored XSS in blog comments. Payload fetches victim's account page, 
 extracts CSRF token using regex, then uses that token to submit a POST 
 request changing the victim's email address — all executed silently 
@@ -50,7 +51,7 @@ fetch('/my-account')
 
 ---
 
-**Lab 2 - Reflected XSS into HTML context with nothing encoded**<br>
+### Lab 2 - Reflected XSS into HTML context with nothing encoded
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
 **Payload:**
@@ -59,7 +60,7 @@ page HTML with zero escaping or filtering — payload executes immediately.
 ```
 ---
 
-**Lab 3 - Stored XSS into HTML context with nothing encoded**<br>
+### Lab 3 - Stored XSS into HTML context with nothing encoded
 Stored XSS in comment functionality. The comment reflected directly to someone who views it
 **Payload:**
 ```html
@@ -67,7 +68,7 @@ Stored XSS in comment functionality. The comment reflected directly to someone w
 ```
 ---
 
-**Lab 4 - DOM XSS in document.write sink using source location.search**<br>
+### Lab 4 - DOM XSS in document.write sink using source location.search
 DOM based XSS vulnerability lives in client side javascript, not in server. This lab had document.write() directly 
 outputting location.search (the URL query parameter) without sanitization.
 ```html
@@ -78,7 +79,7 @@ rather than being treated as data.
 
 ---
 
-**Lab 5 - DOM XSS in innerHTML sink using source location.search**<br>
+### Lab 5 - DOM XSS in innerHTML sink using source location.search
 DOM-based XSS vulnerability where JavaScript code uses innerHTML to write 
 location.search (URL query parameter) directly into the page without sanitization.
 Key difference from document.write: innerHTML doesn't execute `<script>` tags 
@@ -90,7 +91,7 @@ The broken image triggers the onerror event, executing the JavaScript payload.
 
 ---
 
-**Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source**<br>
+### Lab 6 - DOM XSS in jQuery anchor href attribute sink using location.search source
 DOM-based XSS using jQuery. The code took the returnPath URL parameter 
 and directly inserted it into a link's href attribute without sanitization.
 ```html
@@ -101,7 +102,7 @@ is clicked, rather than navigating to a URL. This exfiltrates the victim's cooki
 
 ---
 
-**Lab 7 - DOM XSS in jQuery selector sink using a hashchange event**<br>
+### Lab 7 - DOM XSS in jQuery selector sink using a hashchange event
 The page listens for hash changes (#something). When the hash changes, it uses jQuery to find and scroll to a matching post title. However, the hash is taken directly from the URL and put into a jQuery selector without checking if it's safe.
 ```javascript
 $(window).on('hashchange', function(){
@@ -129,7 +130,7 @@ Payload: <iframe src="https://target.com/#" onload="this.src+='<img src=x onerro
 
 ---
 
-**Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded**<br>
+### Lab 8 - Reflected XSS into attribute with angle brackets HTML-encoded
 Reflected XSS in search functionality. User input reflected directly into 
 page HTML with zero escaping or filtering — payload executes immediately.
 This time the angle brackets get HTML encoded, so script tags will not work here.
@@ -139,7 +140,7 @@ Payload: " autofocus onfocus="alert(1)
 
 ---
 
-**Lab 9 - Stored XSS into anchor href attribute with double quotes HTML-encoded**<br>
+### Lab 9 - Stored XSS into anchor href attribute with double quotes HTML-encoded
 Stored XSS via the comment form's Website field. The value becomes the 
 `href` attribute of the comment author's name link. Since double quotes are 
 HTML-encoded, attribute-breakout with `"` doesn't work — but the `javascript:` 
@@ -150,19 +151,19 @@ Payload: javascript:alert(1)
 
 ---
 
-**Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded**<br>
+### Lab 10 - Reflected XSS into a JavaScript string with angle brackets HTML encoded
 ```html
 Payload: '; alert(1);//
 ```
 
-**Lab 11 - DOM XSS in document.write sink using source location.search inside a select element**<br>
+### Lab 11 - DOM XSS in document.write sink using source location.search inside a select element
 ```html
 Payload: https://...productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=x%20onerror=alert(1)%3E
 ```
 
 ---
 
-**Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded**<br>
+### Lab 12 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
 AngularJS processes JavaScript expressions inside `{{ }}` double curly braces. When angle brackets `<>` and quotes are HTML-encoded, standard XSS payloads fail. However, AngularJS expressions bypass this by using the Function constructor.
 **How it works:**
 - ng-app on the page activates AngularJS`
@@ -178,7 +179,7 @@ Instead of `alert(1)` (which needs quotes and might be blocked), we use `Functio
 
 ---
 
-**Lab 13 - Reflected DOM XSS**
+### Lab 13 - Reflected DOM XSS
 
 **Methodology**
 I got search bar, so I'm pretty sure that it's the way to interact with the website and inject the payload.
@@ -197,7 +198,7 @@ Payload: \"-alert(1)}//
 
 ---
 
-**Lab 14 - Stored DOM XSS**
+### Lab 14 - Stored DOM XSS
 
 **Methodology and Hypothesis testing**
 - Hypothesis 1: website field with `javascript:alert(1)`
@@ -217,7 +218,7 @@ Final payload: <><img src=x onerror=alert(1)>
 
 ---
 
-**Lab 15 - Reflected XSS into HTML context with most tags and attributes blocked**
+### Lab 15 - Reflected XSS into HTML context with most tags and attributes blocked
 
 **Methodology**
 So in this lab it is mentioned that vulnerability lies in search functionality but it is protected by WAF (Web Application Firewall) for common XSS vectors.
@@ -249,7 +250,7 @@ The `<iframe>` resides on the attacker's origin to bypass target-side WAF restri
 
 ---
 
-**lab 16 - Reflected XSS into HTML context with all tags blocked except custom ones**
+### lab 16 - Reflected XSS into HTML context with all tags blocked except custom ones
 Custom tags bypass WAF blocklists because they're non-standard HTML. However, custom tags can still receive standard HTML attributes like autofocus, tabindex, and onfocus. 
 
 The attack chain works by: 
@@ -267,7 +268,7 @@ Decoded payload in search parameter:
 
 ---
 
-**Lab 17 - Reflected XSS with some SVG markup allowed**
+### Lab 17 - Reflected XSS with some SVG markup allowed
 SVG animation tags like `<animateTransform>` bypass standard WAF filters because they're specialized SVG elements. The onbegin event fires automatically when the animation element is created/parsed, without requiring user interaction or explicit animation triggers. By nesting `<animateTransform>` inside an SVG container (`<svg>` and `<rect>`), the event fires immediately on page load, executing arbitrary code.
 ```
 Payload: <svg><rect width="100" height="100"><animateTransform onbegin="alert('xss')"></animateTransform></rect></svg>
@@ -295,7 +296,7 @@ Result: ✅ Alert executed
 
 ---
 
-**Lab 18 - Reflected XSS in canonical link tag**
+### Lab 18 - Reflected XSS in canonical link tag
 
 **Vulnerability:** The page reflects user input directly into the href attribute of a canonical link tag in the `<head>`. While angle brackets are escaped (preventing `<script>` injection), you can break out of the href attribute and inject new HTML attributes.
 
@@ -329,7 +330,7 @@ html
 
 ---
 
-**Lab 19 - Reflected XSS into a JavaScript string with single quote and backslash escaped**
+### Lab 19 - Reflected XSS into a JavaScript string with single quote and backslash escaped
 
 **Vulnerability:** User input is reflected directly into a JavaScript string variable. While single quotes and backslashes are escaped by the server, angle brackets are not. This allows injection of HTML/script tags that break out of the JavaScript context.
 
@@ -354,6 +355,25 @@ Payload: </script><script>alert(1)</script>
 - Server-side escaping of quotes/backslashes isn't enough if angle brackets aren't filtered
 - HTML tag injection can break out of JavaScript strings
 - Close existing tags, then inject your own
+
+### Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped
+
+**Vulnerability:** User input is reflected directly into a JavaScript string variable in the search query tracking functionality. The server encodes angle brackets and double quotes, and escapes single quotes, but does not escape backslashes.
+
+**Root cause:** The site handles angle brackets and double quotes with HTML encoding, and single quotes by adding a backslash in front of them. It does not escape backslashes, so a backslash typed by the user can cancel the escape added to a quote.
+
+**Steps:**
+1. Input: `\` results in `'\'`. The backslash takes the site's closing quote as its partner, so the string never closes and the script fails to parse.
+2. Input: `\'` results in `'\\''`. The server escapes the quote, but the first two backslashes pair up as one literal backslash. The quote is no longer escaped, so it closes the string.
+3. Input: `\'; alert()//` results in `'\\'; alert()//';`. The quote closes the string, `alert()` runs as code, and `//` comments out the leftover `';` from the site's original line so the script still parses.
+
+**Why it works:**
+1. The lone backslash escapes the site's closing quote, so the JavaScript string never terminates and the syntax breaks.
+2. The server's escape adds a second backslash, and JavaScript reads `\\` as a literal backslash, which leaves the quote unescaped.
+3. With the quote free to close the string, `alert()` becomes executable code, and `//` prevents the leftover `';` from causing a syntax error.
+
+**Remediation:** Escape backslashes before escaping quotes, so user input can't cancel the escape. A safer fix is to avoid placing user input inside script blocks altogether, or to encode it for the JavaScript context (for example, with JSON encoding), so no special characters can break out of the string.
+
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
