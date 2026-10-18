@@ -26,6 +26,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 19 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 | 20 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
 | 21 | Stored XSS into onclick event with angle brackets and double quotes HTML-encoded and single quotes and backslash escaped | XSS | ✅ Solved |
+| 22 | Reflected XSS into a template literal with angle brackets, single, double quotes, backslash and backticks Unicode-escaped | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -397,6 +398,26 @@ Payload: </script><script>alert(1)</script>
 - The browser evaluates `alert()` while computing the subtraction, so the alert runs.
 
 **Remediation:** The server should use context-aware output encoding before it inserts user input into the HTML or JavaScript context. HTML encoding alone doesn't protect data placed inside JavaScript event-handler attributes.
+
+---
+
+### Lab 22 - Reflected XSS into a template literal with angle brackets, single, double quotes, backslash and backticks Unicode-escaped
+
+**Vulnerability:** User input is reflected directly in the site. Angle brackets, single, and double quotes are HTML encoded, and backticks are unicode escaped. No encoding and escaping in template literal.
+
+**Root cause:** The site handles angle brackets, single and double quotes with HTML encoding, and backticks with unicode escaping. It never encodes or escapes `$`, `{` and `}`. One can evaluate JavaScript expressions inside template literal easily.
+
+**Steps:**
+1. In search functionality, try with `${1+1}` and see how it validates the input.
+2. After ${1+1} returns 2, we now know our vulnerability. We can execute `${alert()}` in the search functionality.
+3. The browser will execute `alert()` inside the template literal.
+
+**Why it works:**
+The server only looks for angle brackets, single and double quotes, and backticks. The server blocks backticks, but `${...}` is part of the template literal syntax itself, so the browser evaluates the expression when the line runs.
+
+**Remediation:**
+- Keep user data out of executable code. Show it as plain text, the way innerText displays the message.
+- If it must go into JavaScript, encode it for that context so `$`, `{`, and `}` can’t start an expression.
 
 ---
 
