@@ -25,6 +25,7 @@ Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to 
 | 18 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 | 19 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 | 20 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
+| 21 | Stored XSS into onclick event with angle brackets and double quotes HTML-encoded and single quotes and backslash escaped | XSS | ✅ Solved |
 
 ## Key Techniques
 
@@ -356,7 +357,9 @@ Payload: </script><script>alert(1)</script>
 - HTML tag injection can break out of JavaScript strings
 - Close existing tags, then inject your own
 
-### Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped
+---
+
+### Lab 20 - Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped
 
 **Vulnerability:** User input is reflected directly into a JavaScript string variable in the search query tracking functionality. The server encodes angle brackets and double quotes, and escapes single quotes, but does not escape backslashes.
 
@@ -374,6 +377,28 @@ Payload: </script><script>alert(1)</script>
 
 **Remediation:** Escape backslashes before escaping quotes, so user input can't cancel the escape. A safer fix is to avoid placing user input inside script blocks altogether, or to encode it for the JavaScript context (for example, with JSON encoding), so no special characters can break out of the string.
 
+---
+
+### Lab 21 - Stored XSS into onclick event with angle brackets and double quotes HTML-encoded and single quotes and backslash escaped
+
+**Vulnerability:** User input is stored in the database and affects more users than reflected XSS does. The server encodes angle brackets and double quotes, and escapes single quotes and backslashes, but it doesn't handle entities. The `&` character starts an entity, and `amp` is the name of the entity that stands for `&`. When the browser reads HTML, it sees `&amp;` and replaces it with a single `&`. Similarly, `&apos;` is replaced with `'`.
+
+**Root cause:** The site handles angle brackets and double quotes with HTML encoding, and escapes single quotes and backslashes. It never encodes `&`, so entities pass through untouched. The server protects the characters it sees, but the browser creates new ones afterward.
+
+**Steps:**
+1. Fill in the comment, name, and email fields with ordinary values.
+2. In the website field, enter `https://test/?&apos;-alert()-&apos;` and submit. (This solves the lab.)
+3. To confirm the alert, click the author name in your comment.
+
+**Why it works:**
+- The server only looks for a literal `'`. `&apos;` is not a literal `'`, so the server doesn't escape it.
+- The browser then converts `&apos;` into a real `'`, which closes the JavaScript string.
+- The `-` keeps the line valid by joining `alert()` into the same expression.
+- The browser evaluates `alert()` while computing the subtraction, so the alert runs.
+
+**Remediation:** The server should use context-aware output encoding before it inserts user input into the HTML or JavaScript context. HTML encoding alone doesn't protect data placed inside JavaScript event-handler attributes.
+
+---
 
 ## Disclaimer
 This is performed for educational use only on legal, intentionally vulnerable 
