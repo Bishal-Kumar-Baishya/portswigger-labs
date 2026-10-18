@@ -55,6 +55,7 @@ PortSwigger Labs/
 | 32 | Reflected XSS in canonical link tag | XSS | ✅ Solved |
 | 33 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 | 34 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
+| 35 | Stored XSS into onclick event with angle brackets and double quotes HTML-encoded and single quotes and backslash escaped | XSS | ✅ Solved |
 
 ## Custom Scripts
 
