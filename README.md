@@ -56,6 +56,7 @@ PortSwigger Labs/
 | 33 | Reflected XSS into a JavaScript string with single quote and backslash escaped | XSS | ✅ Solved |
 | 34 | Reflected XSS into a JavaScript string with angle brackets and double quotes HTML-encoded and single quotes escaped | XSS | ✅ Solved |
 | 35 | Stored XSS into onclick event with angle brackets and double quotes HTML-encoded and single quotes and backslash escaped | XSS | ✅ Solved |
+| 36 | Reflected XSS into a template literal with angle brackets, single, double quotes, backslash and backticks Unicode-escaped | XSS | ✅ Solved |
 
 ## Custom Scripts
 
